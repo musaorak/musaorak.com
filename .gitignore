@@ -1,0 +1,12 @@
+# macOS
+.DS_Store
+# LaTeX build files (CV source is main.tex; the built PDF Orak_CV.pdf IS tracked)
+*.aux
+*.log
+*.out
+*.fls
+*.fdb_latexmk
+*.synctex.gz
+main.pdf
+# Original photo source (converted to assets/photo.jpg)
+*.heic

@@ -1,0 +1,402 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% Simple LaTeX CV Template %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% NOTE: If you find that it says1                                     %%
+%%                                                                    %%
+%%                           1 of ??                                  %%
+%%                                                                    %%
+%% at the bottom of your first page, this means that the AUX file     %%
+%% was not available when you ran LaTeX on this source. Simply RERUN  %%
+%% LaTeX to get the ``??'' replaced with the number of the last page  %%
+%% of the document. The AUX file will be generated on the first run   %%
+%% of LaTeX and used on the second run to fill in all of the          %%
+%% references.                                                        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Don't like 10pt? Try 11pt or 12pt
+\documentclass[10pt]{article}
+
+% This is a helpful package that puts math inside length specifications
+\usepackage{calc}
+\usepackage{multicol}
+% Layout: Puts the section titles on left side of page
+\reversemarginpar
+
+%
+%         PAPER SIZE, PAGE NUMBER, AND DOCUMENT LAYOUT NOTES:
+%
+% The next \usepackage line changes the layout for CV style section
+% headings as marginal notes. It also sets up the paper size as either
+% letter or A4. By default, letter was used. If A4 paper is desired,
+% comment out the letterpaper lines and uncomment the a4paper lines.
+%
+% As you can see, the margin widths and section title widths can be
+% easily adjusted.
+%
+% ALSO: Notice that the includefoot option can be commented OUT in order
+% to put the PAGE NUMBER *IN* the bottom margin. This will make the
+% effective text area larger.
+%
+% IF YOU WISH TO REMOVE THE ``of LASTPAGE'' next to each page number,
+% see the note about the +LP and -LP lines below. Comment out the +LP
+% and uncomment the -LP.
+%
+% IF YOU WISH TO REMOVE PAGE NUMBERS, be sure that the includefoot line
+% is uncommented and ALSO uncomment the \pagestyle{empty} a few lines
+% below.
+%
+
+%% Use these lines for letter-sized paper
+\usepackage[paper=letterpaper,
+            %includefoot, % Uncomment to put page number above margin
+            marginparwidth=1.2in,     % Length of section titles
+            marginparsep=.05in,       % Space between titles and text
+            margin=0.7in,               % 1 inch margins
+            includemp]{geometry}
+
+%% Use these lines for A4-sized paper
+%\usepackage[paper=a4paper,
+%            %includefoot, % Uncomment to put page number above margin
+%            marginparwidth=30.5mm,    % Length of section titles
+%            marginparsep=1.5mm,       % Space between titles and text
+%            margin=25mm,              % 25mm margins
+%            includemp]{geometry}
+
+%% More layout: Get rid of indenting throughout entire document
+\setlength{\parindent}{0in}
+
+%% This gives us fun enumeration environments. compactenum will be nice.
+\usepackage{enumerate}
+\usepackage{paralist}
+\usepackage[utf8]{inputenc}
+%% Reference the last page in the page number
+%
+% NOTE: comment the +LP line and uncomment the -LP line to have page
+%       numbers without the ``of ##'' last page reference)
+%
+% NOTE: uncomment the \pagestyle{empty} line to get rid of all page
+%       numbers (make sure includefoot is commented out above)
+%
+\usepackage{fancyhdr,lastpage}
+\usepackage[colorlinks]{hyperref}
+
+\pagestyle{fancy}
+%\pagestyle{empty}      % Uncomment this to get rid of page numbers
+\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+\fancyfootoffset{\marginparsep+\marginparwidth}
+\newlength{\footpageshift}
+\setlength{\footpageshift}
+          {0.5\textwidth+0.5\marginparsep+0.5\marginparwidth-2in}
+\lfoot{\hspace{\footpageshift}%
+       \parbox{4in}{\, \hfill %
+                    \arabic{page} of \protect\pageref*{LastPage} % +LP
+%                    \arabic{page}                               % -LP
+                    \hfill \,}}
+
+% Finally, give us PDF bookmarks
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.3}
+\definecolor{azure}{rgb}{0.0, 0.5, 1.0}
+\definecolor{bleudefrance}{rgb}{0.19, 0.55, 0.91}
+\definecolor{blue(ryb)}{rgb}{0.01, 0.28, 1.0}
+\definecolor{brandeisblue}{rgb}{0.0, 0.44, 1.0}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% The title (name) with a horizontal rule under it
+%
+% Usage: \makeheading{name}
+%
+% Place at top of document. It should be the first thing.
+\newcommand{\makeheading}[1]%
+        {\hspace*{-\marginparsep minus \marginparwidth}%
+         \begin{minipage}[t]{\textwidth+\marginparwidth+\marginparsep}%
+                {\large \bfseries #1}\\[-0.15\baselineskip]%
+                 \rule{\columnwidth}{1pt}%
+         \end{minipage}}
+
+% The section headings
+%
+% Usage: \section{section name}
+%
+% Follow this section IMMEDIATELY with the first line of the section
+% text. Do not put whitespace in between. That is, do this:
+%
+%       \section{My Information}
+%       Here is my information.
+%
+% and NOT this:
+%
+%       \section{My Information}
+%
+%       Here is my information.
+%
+% Otherwise the top of the section header will not line up with the top
+% of the section. Of course, using a single comment character (%) on
+% empty lines allows for the function of the first example with the
+% readability of the second example.
+\renewcommand{\section}[2]%
+        {\pagebreak[2]\vspace{0.75\baselineskip}%
+         \phantomsection\addcontentsline{toc}{section}{#1}%
+         \hspace{0in}%
+         \marginpar{
+         \raggedright \scshape #1}#2}
+
+% An itemize-style list with lots of space between items
+\newenvironment{outerlist}[1][\enskip\textbullet]%
+        {\begin{enumerate}[#1]}{\end{enumerate}%
+         \vspace{-.6\baselineskip}}
+
+% An environment IDENTICAL to outerlist that has better pre-list spacing
+% when used as the first thing in a \section
+\newenvironment{lonelist}[1][\enskip\textbullet]%
+        {\vspace{-\baselineskip}\begin{list}{#1}{%
+        \setlength{\partopsep}{0pt}%
+        \setlength{\topsep}{0pt}}}
+        {\end{list}\vspace{-.6\baselineskip}}
+
+% An itemize-style list with little space between items
+\newenvironment{innerlist}[1][\enskip\textbullet]%
+        {\begin{compactenum}[#1]}{\end{compactenum}}
+
+% To add some paragraph space between lines.
+% This also tells LaTeX to preferably break a page on one of these gaps
+% if there is a needed pagebreak nearby.
+\newcommand{\blankline}{\quad\pagebreak[2]}
+% \renewcommand{\familydefault}{\sfdefault}
+
+\renewcommand{\familydefault}{\rmdefault}
+
+\hypersetup{
+ colorlinks=,
+ citecolor=blue(ryb),
+ linkcolor=blue(ryb),
+ urlcolor=blue(ryb)}
+ 
+%%%%%%%%%%%%%%%%%%%%%%%% End Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Begin CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+\makeheading{Musa ORAK  \hfill November 2026}
+
+\section{Contact Information}
+Federal Reserve Board of Governors \hfill \textit{Work: +1-202-912-7901} \\
+20th St \& C St NW, Mailstop 23 \hfill \textit{\href{mailto:musa.orak@frb.gov}{musa.orak@frb.gov}} \\
+Washington, DC 20551-0001, USA    \hfill  \textit{\href{https://www.musaorak.com}{www.musaorak.com}}\medskip
+
+
+\section{Education}
+\textbf{Ph.D. in Economics.} University of California, Los Angeles (UCLA).     \hfill                 \textbf{2016}\\
+\textbf{M.A. in Economics.} University of California, Los Angeles (UCLA).  \hfill                \textbf{2012} \\
+\textbf{M.Sc. in Economics.} Middle East Technical University, Ankara.  \hfill    \textbf{2009}	\\
+\textbf{B.Sc. in Economics.} Middle East Technical University, Ankara.  \hfill         \textbf{2004}\medskip
+
+\section{Professional Experience}
+\textbf{Principal Economist}, Federal Reserve Board of Governors.               \hfill      2022-present \\
+
+\textbf{Senior Economist}, Federal Reserve Board of Governors.               \hfill      2019-2022 \\
+\textbf{Economist}, Federal Reserve Board of Governors.               \hfill      2016-2019 \\
+	\textit{The Division of International Finance, Advanced Foreign Economies Section.} \\
+	
+\textbf{Researcher}, Central Bank of the Republic of Turkey.               \hfill     2005-2010 \\
+	\textit{Research and Monetary Policy Department, Monetary Policy Division.} \\
+	
+\textbf{Associate}, Undersecretariat of Turkish Treasury       \hfill            2004-2005\\
+	\textit{Foreign Economic Relations Department, World Bank Projects Division.} \\
+	\\
+
+
+\section{Other Experience} 
+
+\textbf{RA Manager}, Advanced Foreign Economies Section, Federal Reserve Board of Governors.               \hfill      2023-2026 \\
+
+\textbf{Adjunct Faculty}, Johns Hopkins University, Krieger School of Arts and Sciences. \\ Open Economy Macroeconomic (International Finance). 
+                    \null \hfill                    2019-2021\\
+
+\textbf{Reader}, UCLA Department of Economics. International Trade. 
+                    \null \hfill                     2016\\
+                    
+\textbf{Teaching Assistant Coordinator}, UCLA Office of Instructional Development.                 \null     \hfill                                              2014-2015	\\
+
+\textbf{Instructor}, UCLA Department of Economics. \\Macroeconomic Theory and Principles of Macroeconomics. 
+                    \null \hfill                     2013-2015\\
+     
+
+      
+\textbf{Instructor}, Pepperdine University. Intermediate Macroeconomic Theory.  \null \hfill    2013-2014\\
+      
+\textbf{Teaching Assistant/Associate/Fellow}, UCLA Department of Economics.                  
+ \null    \hfill                                              2011-2014      \\
+  
+
+    
+
+\section{Research}
+\textbf{Fields of Interest}\\
+	 \textit{Primary:} Macroeconomics, Labor Markets. \\
+	 \textit{Secondary:} International Macroeconomics, Monetary Policy.\medskip \\
+
+\textbf{Peer-reviewed Publications:}  \smallskip
+\begin{enumerate}
+\item Nida Cakir Melek and Musa Orak, 2026. \textit{\textbf{``Technology and Energy Substitution: A Path toward Climate Change Mitigation,"}} European Economic Review, Elsevier, vol. 186, 105326, June.
+
+\item Lee Ohanian, Musa Orak, and Shihan Shen, 2023. \textit{\textbf{``Revisiting Capital-Skill Complementarity, Inequality, and Labor Share."}} Review of Economic Dynamics, Elsevier, vol. 51, pages 479-505, December.
+
+\item Brendan Epstein, Ryan Nunn, Musa Orak, Elena Patel, 2023. \textit{\textbf{``Taxation, social welfare, and labor market frictions,"}} European Economic Review, Elsevier, vol. 151(C).
+
+\item Harun Alp, Refet Gurkaynak, Gursu Keles and Musa Orak, 2010. \textit{\textbf{``Market Based Measurement of Monetary Policy Expectations in Turkey,''}} Iktisat, Isletme ve Finans (SSCI-Indexed), Volume 25, Issue 295.\medskip
+
+
+\item Zelal Aktas, Harun Alp, Refet Gurkaynak, Mehtap Kesriyeli and Musa Orak, 2009. \textit{\textbf{``Monetary Policy Transmission Mechanism in Turkey: The Effect of Monetary Policy on Financial Markets,''}} Iktisat, Isletme ve Finans (SSCI-Indexed), Volume 24, Issue 278. \medskip
+\end{enumerate}
+
+\textbf{Policy Publications:}  \smallskip
+\begin{enumerate}
+
+\item Chris Avalos, Musa Orak, and Avani Pradhan, 2026. \textit{\textbf{``A Common Pattern behind Diverging Fortunes: U.S. Tariffs and Exports from Canada and Mexico,"}} FEDS Notes, Washington: Board of Governors of the Federal Reserve System, \textit{forthcoming, November 2026}.
+
+\item Andrea De Michelis, Musa Orak, Avani Pradhan, and Albert Queralt\'o, 2026. \textit{\textbf{``The Effect of Oil Prices on Core Inflation: Recent Evidence from the Advanced Economies,"}} FEDS Notes, Washington: Board of Governors of the Federal Reserve System, \textit{forthcoming, November 2026}.
+
+\item Andrea De Michelis, Grace Lofstrom, Mike McHenry, Musa Orak, Albert Queraltó and Mikaël Scaramucci, 2024. \textit{\textbf{``Has the Inflation Process Become More Persistent? Evidence from the Major Advanced Economies,"}} FEDS Notes 2024-07-19-3, Board of Governors of the Federal Reserve System. 
+
+\item Danilo Cascaldi-Garcia, Musa Orak, and Zina Saijid, 2023. \textit{\textbf{``Drivers of Post-pandemic Inflation in Selected Advanced Economies and Implications for the Outlook,"}} FEDS Notes, Washington: Board of Governors of the Federal Reserve System.
+
+\item Anna Lipinska and Musa Orak, 2020. \textit{\textbf{``Real Effects of Uncertainty: Evidence from Brexit,"}} FEDS Notes, Washington: Board of Governors of the Federal Reserve System. 
+
+
+\item Yusuf Soner Baskaya, Eda Gulsen and Musa Orak, 2009. \textit{\textbf{``The Effects of Inflation Target Revision in Turkey on Expectation Formation Behavior,''}} Economic Notes Discussion Series, Central Bank of Turkey. \medskip
+
+\item Ali Hakan Kara and Musa Orak, 2008. \textit{\textbf{``Inflation Targeting,''}} CBRT Books (also a chapter of the book ``Crises, Money and Economists" by Ercan KUMCU). \medskip
+\end{enumerate}
+\textbf{Working Papers and Work in Progress}  \smallskip
+\begin{enumerate}
+\item \textbf{``Ambiguity, Global Financial Risk, and Emerging Market Business Cycles."} (with Brendan Epstein, Rahul Mukherjee, and Alessandro Peri). October 2026. \href{https://musaorak.com/papers/ambiguity_emerging_markets.pdf}{Draft.}
+
+\item \textbf{``Taxable Income on the Job Ladder: On-the-Job Search and the Welfare Cost of Labor Taxation."} (with Brendan Epstein and Elena Patel). October 2026. \href{https://musaorak.com/papers/taxable_income_job_ladder.pdf}{Draft.}
+
+\item \textbf{``Cooling without Cracking: The Unemployment Cost of Post-Pandemic Labor Market Cooling."} (with Brendan Epstein and Avani Pradhan). October 2026. \href{https://musaorak.com/papers/cooling_without_cracking.pdf}{Draft.}
+
+\item \textbf{``The Changing Anatomy of Vacancy Propagation: Industry Responses and Compositional Shifts."} (with Brendan Epstein). October 2026. \href{https://musaorak.com/papers/vacancy_propagation.pdf}{Draft.}
+
+\item \textbf{``Computerization, Persistent Returns, and Wealth Concentration."} October 2026. \href{https://musaorak.com/papers/computerization_wealth_concentration.pdf}{Draft.}
+
+\item \textbf{``Capital-Task Complementarity and the Decline of the U.S. Labor Share of Income."} International Finance Discussion Papers 1200. Board of Governors of the Federal Reserve System (U.S.). March 2017. \href{https://doi.org/10.17016/IFDP.2017.1200}{Paper.}
+\end{enumerate}
+\medskip
+
+
+
+%\textbf{Work in Progress}  \smallskip
+%\begin{enumerate}
+%\item \medskip \\
+%\end{enumerate}
+
+\newpage
+
+
+
+\section{Presentations}
+\begin{enumerate}
+\item Southern Economic Association 95th Annual Meeting, Tampa, FL. \\
+\textit{``Ambiguity, Global Financial Risk, and Emerging Market Business Cycles."}  \hfill                                                Nov. 2025
+
+\item 3rd RISE Workshop, Waseda University, Tokyo. \\
+\textit{``Ambiguity, Global Financial Risk, and Emerging Market Business Cycles."}  \hfill                                                July 2025
+
+\item IF Policy Workshop. \\
+\textit{``Benchmark Phillips Curves for AFE Core Inflation."}  \hfill                                                February 2024
+
+
+\item Federal Reserve System Energy Meeting in Houston. \\
+\textit{``The Income Share of Energy and Substitution: A Macroeconomic Approach."}  \hfill                                                Nov. 2022
+
+\item Federal Reserve Bank of Philadelphia. \\
+\textit{``Revisiting Capital-Skill Complementarity, Inequality, and Labor Share."}  \hfill                                                February 2022
+\item Colby College, Carleton College, University of San Diego, Federal Reserve Board, \\ University of Miami, Federal Reserve System Macro Meetings in Cincinnati.\\
+\textit{``Capital-Task Complementarity and the Decline of the U.S. Labor Share of Income"}.                                           \hfill                                                2016
+\item UCLA Macroeconomics Proseminars.                                           \hfill                                                2012-2015
+\item National Bank of Greece, Athens. \\
+\textit{``Measuring Market Based Monetary Policy Expectations in Turkey''}.        \hfill             November 2009
+\item Banque de France, Paris. \\
+\textit{``Inflation Targeting in Turkey: Past and Current Issues and Challenges''}.   \hfill        November 2008
+\item Bank of Albania, Tirana. 
+\textit{``Monetary Policy Transmission Mechanism in Turkey in the Context of Inflation Targeting''}.     \hfill                                                                                                 November 2008
+\item Economic Discussions Conference, Istanbul. \textit{``Inflation Targeting''}.                      \hfill       October 2008
+\item Central Bank of Turkey, Ankara. \\ \textit{``Inflation Targeting under IMF Conditionality''}.   \hfill      May 2007 
+\item Bank of England, London. \textit{``Inflation Targeting Experience in Turkey''}.             \hfill       February 2007\medskip
+  \end{enumerate}
+
+  
+\section{Fellowships, Honors and Awards}
+\begin{enumerate}
+\item Dissertation Year Fellowship, UCLA.                                       \hfill                               Fall 2015-Spring 2016 
+\item Welton Prize for Outstanding Graduate Student Paper for Macroeconomics, UCLA.\\ \null  \hfill     Spring 2015 
+\item Graduate Student Proctoring Award, UCLA.  \hfill                                                                            Spring 2015 
+\item Teaching Excellence Award, UCLA.  \hfill                                                                                           Winter 2013 
+\item Teaching Assistant Fellowship, UCLA.  \hfill                                                                                         2011-2015
+\item Study Abroad Scholarship, Central Bank of Turkey.  \hfill                                                           October 2008
+\item Letter of Excellence, Joint Vienna Institute.  \hfill                                                                               June 2008
+\item 3rd Best Ranking Graduating Student, METU.  \hfill                                                                                                June 2004
+\item Young Economist Award, Turkish Economy Foundation.  \hfill                                                       June 2004
+\item High Honor Student Award, 8 successive terms, METU.  \hfill                                                       2000-2004
+\item $374^{th}$ Among $1,500,000$ students at university entrance exam.  \hfill                                              July 1999\medskip
+ \end{enumerate}
+
+
+
+
+\section{Training and Conferences}
+\begin{enumerate}
+\item The 7th Annual Energy Conference ( Energy and the Economy: The New Energy Landscape), \\ \textit{FRB of Dallas and FRB of Kansas City, Houston.}                                                                                                                                 \hfill November 2022 
+
+\item Advanced Topics in Monetary Economics, \\ \textit{Study Center Gerzensee, Switzerland.}                                                                                                                                 \hfill August 2022 
+
+\item Roundtable on Trade Policy Uncertainty, \\ \textit{Federal Reserve Board, Washington, D.C.}                                                                                                                                    \hfill May 2019 
+\item  Technology-Enabled Disruption: Implications for Business, Labor Markets and Monetary Policy, \\ \textit{Federal Reserve Banks of Dallas and Atlanta, Dallas.}                                                                                                                                    \hfill May 2018 
+\item 3rd Economic Research in South East Europe Workshop, \\ \textit{Bank of Greece and Bank of Albania, Athens.}                                                                                                                                    \hfill November 2009 
+\item Association of Southern European Economic Theorists Annual Conference, \\ \textit{Bogazici University, Istanbul.}                                                                                                                                      \hfill October 2009	
+\item Monetary Strategies and Inflation Seminar, \textit{Banque de France, Paris. }      \hfill            November 2008 
+\item 2nd Economic Research in South East Europe Workshop, \\ \textit{Bank of Albania, Tirana.} 
+                                                                                                                                            \hfill      November 2008 
+\item 15th World Economic Conference, \\ \textit{International Economic Association, Istanbul.}   \hfill    June 2008	
+\item Applied Economic Policy, \\ \textit{IMF, World Bank, OECD, OeNB, JVI, Vienna.}    \hfill        March-June 2008	 
+\item Monetary and Exchange Rate Policies, \\ \textit{IMF and Joint Vienna Institute, Vienna.}     \hfill       June 2007	
+\item Inflation Targeting and Forecasting at CNB, \textit{Czech National Bank, Prague.}      \hfill                May 2007	
+\item Inflation Targeting, \textit{Bank of England, London.}                                            \hfill                    February 2007	
+\item International Conference on Dollarization, \\ \textit{Central Bank of Turkey, Istanbul.}   \hfill   December 2006	
+\item Inflation Targeting, \textit{Bank of England and National Bank of Serbia, Belgrade.}    \hfill     October 2006 
+\item Workshop on Fund Disbursement and Project Execution, \\ \textit{The World Bank Group, Ankara.} \hfill June 2005                
+\end{enumerate}                                                                                                                                                      
+    
+\section{Referee}
+Macroeconomic Dynamics, Review of Economic Dynamics ($\times 4$), European Economic Review ($\times 2$), International Economic Review ($\times 2$).\medskip
+
+\section{Computer Skills}
+Matlab, Stata, LaTeX, Gauss, Dynare.\medskip
+
+\section{Language Skills}
+Turkish (native).\\
+English (fluent).\medskip
+
+\section{Citizenship}
+Turkey and U.S. citizen.\medskip
+
+ 
+
+\section{References}
+Available upon request.
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% End CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
