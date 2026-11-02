@@ -70,11 +70,17 @@ p { margin: 0 0 1rem; }
 .portrait.main { grid-area: main; }
 .portrait.second { grid-area: second; margin-top: 1.25rem; }
 .portrait img { width: 100%; height: auto; border-radius: 8px; display: block; }
+/* Main photo as a circle: square crop focused near the top (the face), then rounded. */
+.portrait.main img {
+  aspect-ratio: 1 / 1; object-fit: cover; object-position: 50% 18%;
+  border-radius: 50%; width: 220px; margin: 0 auto;
+}
 .portrait figcaption { font-size: .8rem; color: var(--muted); margin-top: .4rem; line-height: 1.4; }
 @media (max-width: 600px) {
   .about { grid-template-columns: 1fr; grid-template-areas: "main" "bio" "second"; }
   .portrait { max-width: 260px; }
   .portrait.main { margin-bottom: 1.5rem; }
+  .portrait.main img { width: 180px; margin: 0; }
 }
 .links { list-style: none; padding: 0; margin: 1.25rem 0 0; display: flex; flex-wrap: wrap; gap: .5rem .6rem; }
 .links a, .pub-links a {
