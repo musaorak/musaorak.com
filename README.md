@@ -10,7 +10,9 @@ Personal research website for Musa Orak. Plain HTML and CSS, no build step, no d
 | `research.html` | Publications, policy notes, working papers, work in progress |
 | `teaching.html` | Teaching record |
 | `assets/style.css` | The single stylesheet (light and dark mode) |
-| `assets/photo.jpg` | Portrait (converted from `IMG_0058.heic`, which stays out of the published site) |
+| `assets/headshot.jpg` | Main portrait (shown as a circle on the About page) |
+| `assets/with-yellen.jpg` | Photo with Janet Yellen (converted from `IMG_0058.heic`, which stays out of the published site) |
+| `assets/eccles-building.jpg` | Public-domain Federal Reserve photo of the Eccles Building, shown next to Contact |
 | `main.tex` | CV source (LaTeX) |
 | `Orak_CV.pdf` | Built CV, linked from the nav |
 | `build_cv.sh` | Rebuilds `Orak_CV.pdf` from `main.tex` |
@@ -20,7 +22,8 @@ Personal research website for Musa Orak. Plain HTML and CSS, no build step, no d
 
 - **Add a paper:** copy one `<article class="pub">…</article>` block in `research.html` and edit it. Put it under the right heading: Publications, Policy Notes and Papers, Working Papers, or Work in Progress.
 - **Update the CV:** edit `main.tex`, then run `./build_cv.sh`.
-- **Change the photo:** replace `assets/photo.jpg` (any HEIC can be converted with `sips -s format jpeg -Z 900 IN.heic --out assets/photo.jpg`).
+- **Change a photo:** replace the file in `assets/` (any HEIC can be converted with `sips -s format jpeg -Z 900 IN.heic --out assets/headshot.jpg`).
+- **Visitor statistics:** every page ends with a Cloudflare Web Analytics snippet. View the numbers at <https://dash.cloudflare.com/?to=/:account/web-analytics>. Keep the snippet when adding a new page.
 - **Preview locally:** run `python3 -m http.server 8000` in this folder and open <http://localhost:8000>.
 
 ## Step 1: register the domain
