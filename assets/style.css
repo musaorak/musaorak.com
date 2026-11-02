@@ -90,10 +90,10 @@ p { margin: 0 0 1rem; }
 .links a:hover, .pub-links a:hover { text-decoration: none; filter: brightness(.95); }
 
 /* Contact block with a photo beside it */
-.contact { display: grid; grid-template-columns: 1fr 220px; gap: 1rem 2rem; align-items: start; }
+.contact { display: grid; grid-template-columns: 1fr 300px; gap: 1rem 2rem; align-items: start; }
 @media (max-width: 600px) {
   .contact { grid-template-columns: 1fr; }
-  .portrait.side { max-width: 220px; }
+  .portrait.side { max-width: 300px; }
 }
 
 /* Research page */
