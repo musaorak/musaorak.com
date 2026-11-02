@@ -60,11 +60,13 @@ p { margin: 0 0 1rem; }
 .small { font-size: .9rem; }
 
 /* About page layout */
-.about { display: grid; grid-template-columns: 1fr 170px; gap: 2rem; align-items: start; }
-.portrait img { width: 100%; border-radius: 8px; display: block; }
+.about { display: grid; grid-template-columns: 1fr 260px; gap: 2rem; align-items: start; }
+.portrait { margin: 0; }
+.portrait img { width: 100%; height: auto; border-radius: 8px; display: block; }
+.portrait figcaption { font-size: .8rem; color: var(--muted); margin-top: .4rem; line-height: 1.4; }
 @media (max-width: 600px) {
   .about { grid-template-columns: 1fr; }
-  .portrait { max-width: 140px; }
+  .portrait { max-width: 260px; }
 }
 .links { list-style: none; padding: 0; margin: 1.25rem 0 0; display: flex; flex-wrap: wrap; gap: .5rem .6rem; }
 .links a, .pub-links a {
