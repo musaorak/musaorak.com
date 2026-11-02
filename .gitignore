@@ -10,3 +10,5 @@
 main.pdf
 # Original photo source (converted to assets/photo.jpg)
 *.heic
+IMG_*.jpg
+IMG_*.JPG

@@ -59,14 +59,22 @@ p { margin: 0 0 1rem; }
 .muted { color: var(--muted); }
 .small { font-size: .9rem; }
 
-/* About page layout */
-.about { display: grid; grid-template-columns: 1fr 260px; gap: 2rem; align-items: start; }
+/* About page layout: bio on the left, headshot top right, second photo below it.
+   On phones: headshot, then bio, then the second photo. */
+.about {
+  display: grid; grid-template-columns: 1fr 260px; grid-template-areas: "bio main" "bio second";
+  gap: 0 2rem; align-items: start;
+}
+.about .bio { grid-area: bio; }
 .portrait { margin: 0; }
+.portrait.main { grid-area: main; }
+.portrait.second { grid-area: second; margin-top: 1.25rem; }
 .portrait img { width: 100%; height: auto; border-radius: 8px; display: block; }
 .portrait figcaption { font-size: .8rem; color: var(--muted); margin-top: .4rem; line-height: 1.4; }
 @media (max-width: 600px) {
-  .about { grid-template-columns: 1fr; }
+  .about { grid-template-columns: 1fr; grid-template-areas: "main" "bio" "second"; }
   .portrait { max-width: 260px; }
+  .portrait.main { margin-bottom: 1.5rem; }
 }
 .links { list-style: none; padding: 0; margin: 1.25rem 0 0; display: flex; flex-wrap: wrap; gap: .5rem .6rem; }
 .links a, .pub-links a {
