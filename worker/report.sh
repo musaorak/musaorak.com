@@ -27,12 +27,12 @@ case "$VIEW" in
              GROUP_BY="organization, country, city" ;;
   pages)     DIMS="blob6 AS page";         GROUP_BY="page" ;;
   referrers) DIMS="blob7 AS referrer";     GROUP_BY="referrer" ;;
-  days)      DIMS="formatDateTime(toStartOfDay(timestamp), '%Y-%m-%d') AS day"
+  days)      DIMS="formatDateTime(toStartOfInterval(timestamp, INTERVAL '1' DAY, 'America/New_York'), '%Y-%m-%d', 'America/New_York') AS day"
              GROUP_BY="day"; ORDER_BY="day" ;;
   *) echo "unknown view '$VIEW' (use orgs, pages, referrers or days)" >&2; exit 1 ;;
 esac
 
-SQL="SELECT $DIMS, sum(_sample_interval) AS visits, max(timestamp) AS last_seen
+SQL="SELECT $DIMS, sum(_sample_interval) AS visits, formatDateTime(max(timestamp), '%Y-%m-%d %H:%i', 'America/New_York') AS last_seen_et
 FROM visits
 WHERE timestamp > now() - INTERVAL '$DAYS' DAY
 GROUP BY $GROUP_BY
