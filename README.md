@@ -18,7 +18,7 @@ Personal research website for Musa Orak. Plain HTML and CSS, no build step, no d
 | `build_cv.sh` | Rebuilds `Orak_CV.pdf` from `main.tex` |
 | `CNAME` | Tells GitHub Pages the custom domain is `musaorak.com` |
 | `assets/beacon.js` | One-line visit beacon loaded by every page; calls the `visits` Worker |
-| `worker/` | The `visits` Cloudflare Worker (`visits.js`), its Wrangler config, and `report.sh` for reading the numbers |
+| `worker/` | The `visits` Cloudflare Worker (`visits.js`: beacon plus the `/report` page), its Wrangler config, and `report.sh` for reading the numbers in a terminal |
 
 ## Editing
 
@@ -70,6 +70,22 @@ After step 4, open <https://musaorak.com> once, wait a minute, and run the repor
 Expect many rows for residential and mobile carriers (Comcast, Verizon, T-Mobile) and for
 Apple's iCloud Private Relay. An institution shows up only when someone reads the site from
 its office or campus network or its VPN. Analytics Engine keeps about three months of data.
+
+### Browser version
+
+The Worker can also render the same tables as a web page at
+`https://visits.musaorak.com/report?key=<REPORT_KEY>` (add `&days=7` or `&days=90` to change
+the window). It needs three variables on the Worker, set once in the dashboard: open the
+`visits` Worker → *Settings* → *Variables and Secrets* → *Add*, then *Deploy*:
+
+| Name | Type | Value |
+|---|---|---|
+| `CF_ACCOUNT_ID` | Text | the account ID (same value as in `~/.config/musaorak-visits.env`) |
+| `CF_API_TOKEN` | Secret | the read token (same value as in `~/.config/musaorak-visits.env`) |
+| `REPORT_KEY` | Secret | a long random string; `openssl rand -hex 20` makes one. Keep it in the env file too |
+
+Run `cat ~/.config/musaorak-visits.env` to see the values to paste. The report URL with the key
+is the only credential; bookmark it rather than sharing it. A wrong or missing key returns 404.
 
 ## Step 1: register the domain
 

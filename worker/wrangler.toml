@@ -12,3 +12,7 @@ dataset = "visits"
 
 # Serve at https://visits.musaorak.com; the zone is already on Cloudflare.
 routes = [{ pattern = "visits.musaorak.com", custom_domain = true }]
+
+# The /report page also needs CF_ACCOUNT_ID (text), CF_API_TOKEN (secret) and
+# REPORT_KEY (secret). Set them in the dashboard under Settings → Variables and
+# Secrets, or with `npx wrangler secret put NAME`. They are deliberately not here.
