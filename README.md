@@ -22,7 +22,7 @@ Personal research website for Musa Orak. Plain HTML and CSS, no build step, no d
 
 ## Editing
 
-- **Add a paper:** copy one `<article class="pub">…</article>` block in `research.html` and edit it. Put it under the right heading: Publications, Policy Notes and Papers, Working Papers, or Work in Progress.
+- **Add a paper:** copy one `<article class="pub">…</article>` block in `research.html` and edit it. Put it under the right heading: Publications, Policy Notes and Papers, or Working Papers and Work in Progress.
 - **Update the CV:** edit `main.tex`, then run `./build_cv.sh`.
 - **Change a photo:** replace the file in `assets/` (any HEIC can be converted with `sips -s format jpeg -Z 900 IN.heic --out assets/headshot.jpg`).
 - **Visitor statistics:** every page ends with two snippets: the Cloudflare Web Analytics beacon (countries, pages, referrers, at <https://dash.cloudflare.com/?to=/:account/web-analytics>) and `assets/beacon.js`, which records the visitor's network organization (see *Who is visiting* below). Keep both when adding a new page.
