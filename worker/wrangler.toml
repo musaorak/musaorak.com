@@ -1,0 +1,14 @@
+# Config for deploying the visit beacon with Wrangler (`npx wrangler deploy` from this
+# folder). The dashboard steps in README.md set up exactly the same thing by hand, so
+# this file is optional.
+name = "visits"
+main = "visits.js"
+compatibility_date = "2026-11-01"
+
+# Analytics Engine dataset the Worker writes to (created on first write).
+[[analytics_engine_datasets]]
+binding = "VISITS"
+dataset = "visits"
+
+# Serve at https://visits.musaorak.com; the zone is already on Cloudflare.
+routes = [{ pattern = "visits.musaorak.com", custom_domain = true }]
