@@ -17,7 +17,7 @@ Personal research website for Musa Orak. Plain HTML and CSS, no build step, no d
 | `Orak_CV.pdf` | Built CV, linked from the nav |
 | `build_cv.sh` | Rebuilds `Orak_CV.pdf` from `main.tex` |
 | `CNAME` | Tells GitHub Pages the custom domain is `musaorak.com` |
-| `assets/visits.js` | One-line visit beacon loaded by every page; calls the `visits` Worker |
+| `assets/beacon.js` | One-line visit beacon loaded by every page; calls the `visits` Worker |
 | `worker/` | The `visits` Cloudflare Worker (`visits.js`), its Wrangler config, and `report.sh` for reading the numbers |
 
 ## Editing
@@ -25,14 +25,14 @@ Personal research website for Musa Orak. Plain HTML and CSS, no build step, no d
 - **Add a paper:** copy one `<article class="pub">…</article>` block in `research.html` and edit it. Put it under the right heading: Publications, Policy Notes and Papers, Working Papers, or Work in Progress.
 - **Update the CV:** edit `main.tex`, then run `./build_cv.sh`.
 - **Change a photo:** replace the file in `assets/` (any HEIC can be converted with `sips -s format jpeg -Z 900 IN.heic --out assets/headshot.jpg`).
-- **Visitor statistics:** every page ends with two snippets: the Cloudflare Web Analytics beacon (countries, pages, referrers, at <https://dash.cloudflare.com/?to=/:account/web-analytics>) and `assets/visits.js`, which records the visitor's network organization (see *Who is visiting* below). Keep both when adding a new page.
+- **Visitor statistics:** every page ends with two snippets: the Cloudflare Web Analytics beacon (countries, pages, referrers, at <https://dash.cloudflare.com/?to=/:account/web-analytics>) and `assets/beacon.js`, which records the visitor's network organization (see *Who is visiting* below). Keep both when adding a new page.
 - **Preview locally:** run `python3 -m http.server 8000` in this folder and open <http://localhost:8000>.
 
 ## Who is visiting: the `visits` Worker
 
 Cloudflare Web Analytics shows countries and pages but not whose network a visitor is on.
 The `worker/` folder holds a tiny Cloudflare Worker that adds that: each page calls
-`https://visits.musaorak.com` once (via `assets/visits.js`), and the Worker stores the owner
+`https://visits.musaorak.com` once (via `assets/beacon.js`), and the Worker stores the owner
 of the visitor's IP block (a university, a central bank, an ISP), the country and city, the
 page, and the referring site in a Workers Analytics Engine dataset. No IP addresses are
 stored and no cookies are set. The Worker and the dataset are on Cloudflare's free plan.
@@ -42,7 +42,7 @@ served by Cloudflare.
 ### One-time setup (Cloudflare dashboard)
 
 1. **Create the Worker.** <https://dash.cloudflare.com> → *Workers & Pages* → *Create* → *Start with Hello World!* → name it `visits` → *Deploy*.
-2. **Paste the code.** Open the Worker → *Edit code* → replace everything with the contents of `worker/visits.js` → *Deploy*.
+2. **Paste the code.** Run `pbcopy < worker/visits.js` to copy the Worker code (the file in the `worker` folder, not `assets/beacon.js`, which is the browser-side script). Open the Worker → *Edit code* → select all, paste, → *Deploy*.
 3. **Bind the dataset.** Worker → *Settings* → *Bindings* → *Add* → *Analytics Engine* → variable name `VISITS`, dataset `visits` → *Deploy*. The dataset is created on the first write.
 4. **Give it the address the pages call.** Worker → *Settings* → *Domains & Routes* → *Add* → *Custom domain* → `visits.musaorak.com`. Cloudflare adds the DNS record and certificate itself.
 5. **Create a read token for reports.** Profile icon (top right) → *API Tokens* → *Create Token* → *Create Custom Token* → permission *Account* / *Account Analytics* / *Read* → copy the token. The account ID is in the right-hand column of the *Workers & Pages* overview. Save both where the report script looks:

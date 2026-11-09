@@ -1,7 +1,7 @@
 /**
  * visits — a tiny visit beacon for musaorak.com, deployed as a Cloudflare Worker.
  *
- * Each page on the site makes one request here (see assets/visits.js). The Worker
+ * Each page on the site makes one request here (see assets/beacon.js). The Worker
  * records which network the visitor came from (the organization that owns the IP
  * block, e.g. a university or central bank), roughly where, and which page was read.
  * It stores no IP addresses and sets no cookies.
